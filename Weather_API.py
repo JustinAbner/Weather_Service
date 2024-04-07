@@ -1,13 +1,12 @@
 import requests
 
-
 def user_city_and_state(cityname, statecode, countrycode, APIkey):  # Parameters set to receive arguments from main()
     try:
         city_get = requests.get(f'https://api.openweathermap.org/geo/1.0/direct?q='
                                 f'{cityname},{statecode},{countrycode}&appid={APIkey}')
-        # User provided information being passed into the URL to retrieve requested data
+        # User-provided information being passed into the URL to retrieve requested data
 
-        connection_check = city_get.ok  # Checking for connection errors and informing user of outcome
+        connection_check = city_get.ok  # Checking for connection errors and informing the user of the outcome
         if connection_check is True:
             print('Connection successful')
             print('Processing. . .')
@@ -39,7 +38,7 @@ def user_city_and_state(cityname, statecode, countrycode, APIkey):  # Parameters
 def user_zip_code(zip, country, APIkey):  # Parameters set to receive arguments from main()
     try:
         zip_get = requests.get(f'https://api.openweathermap.org/geo/1.0/zip?zip={zip},{country}&appid={APIkey}')
-        connection_check = zip_get.ok  # Checking for connection errors and informing user of outcome
+        connection_check = zip_get.ok  # Checking for connection errors and informing the user of the outcome
         if connection_check is True:
             print('Connection successful')
             print('Processing. . .')
@@ -64,7 +63,7 @@ def user_zip_code(zip, country, APIkey):  # Parameters set to receive arguments 
             lat = str(pull_lat)  # Converting latitude on longitude from integers to strings
             lon = str(pull_lon)
 
-            coordinate_lookup(lat, lon, APIkey)  # Passing the following variables as arguments to next function
+            coordinate_lookup(lat, lon, APIkey)  # Passing the following variables as arguments to the next function
 
 
 def coordinate_lookup(lat, lon, APIkey):  # Parameters set to receive arguments from user_zip() & user_city_and_state()
@@ -84,9 +83,9 @@ def coordinate_lookup(lat, lon, APIkey):  # Parameters set to receive arguments 
 
     weather_get = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat='
                                f'{lat}&lon={lon}&appid={APIkey}{unit_type}')
-    # Passing the latitude, longitude, APIkey and unit type into the URL to retrieve the final weather information
+    # Passing the latitude, longitude, API key, and unit type into the URL to retrieve the final weather information
 
-    weather_json = weather_get.json()  # Putting data into an easier to access format
+    weather_json = weather_get.json()  # Putting data into an easier-to-access format
     print('-' * 80)  # Cosmetic divider
 
     cloud_cover_get = weather_json['clouds']['all']  # Accessing cloud coverage data
@@ -130,7 +129,7 @@ def clean_print_weather(location_name, current_temperature, high_temperature, lo
     print(f'Weather Description: {description.title()}\n')
     print('-' * 63)  # Cosmetic divider
 
-    while True:  # Asking user if they would like to do another look up, with a loop to ensure valid response
+    while True:  # Asking user if they would like to do another lookup, with a loop to ensure valid response
         user_lookup_again = input('Would you like to do another lookup? (y) for Yes, (N) for No: ')
         if user_lookup_again.upper() == 'Y':  # Returns user back to the start for a fresh lookup
             main()
@@ -157,7 +156,7 @@ def main():
                     zipcode = input('Response not valid, please enter a valid zipcode: ')
                 else:
                     user_zip_code(zipcode, country, api_key)
-                    break  # Break created for when user collects weather information, a fresh lookup can begin
+                    break  # Break created for when the user collects weather information, a fresh lookup can begin
         elif user_input == '2':
             city = input('Please enter your City/Town: ')
             while True:
